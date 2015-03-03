@@ -34,7 +34,7 @@ class Ranking:
     
   # Chance that t1 will win against t2 based on training data in db
   def winChance(self, t1, t2):
-    return Pwin(self.db[t1], self.db[t2])
+    return Pwin(self._getRating(t1), self._getRating(t2))
 
   # Ranking of the teams based on Rating and confidence
   def ranking(self):
