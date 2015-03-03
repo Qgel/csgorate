@@ -4,7 +4,7 @@ from HltvScrape import Scraper
 from Ranking import Ranking
 from SiteGen import SiteGen
 
-matchCounts = [200, 400, 800]
+matchCounts = [300, 500, 800]
 minMatches = 20
 outDir = "./html/"
 
