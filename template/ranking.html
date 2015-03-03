@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Ranking for Map: {{ curMap }}{% endblock %}
+
+{% block info %}
+  {{ super() }}
+  <b>Rankings</b>:<br> This Table shows a Ranking of all teams in the database. <br>
+  'Rating' measures the skill of a team, 'Confidence' describes how sure we are that the 'Rating' value is correct (lower is better).
+{% endblock %}
+
+{% block content %}
+  <table id="winTable">
+    <tr class="even">
+        <th>Name</th>
+        <th>Rating</th>
+        <th>Confidence</th>
+        <th>Score</th>
+    </tr>
+  {% for row in rankingTable %} 
+    <tr class="{{ loop.cycle('odd', 'even') }}">
+    {% for entry in row %}
+      {% if loop.first %}
+        <th> {{ entry | e }}</th>
+      {% else %}
+        <th>{{ '%0.2f' | format(entry | float) }}</th>
+      {% endif %}
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  </table>
+{% endblock %}
+

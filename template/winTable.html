@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Win Table for Map: {{ curMap }}{% endblock %}
+
+{% block info %}
+  {{ super() }}
+  <b>Prediction Table</b>:<br> This Table shows a prediction of win chance against each other team.<br> 
+  For example, we predict {{ example.winner | e }} has a chance of {{ '%0.1f' | format(example.chance | float) }}% to win against {{ example.loser | e}}.
+{% endblock %}
+
+{% block content %}
+  <table id="winTable">
+  {% for column in winTable %}
+    <tr class="{{ loop.cycle('odd', 'even') }}">
+    {% set rowloop = loop %}
+    {% for entry in column %}
+      {% if loop.first or rowloop.first or loop.index == rowloop.index %}
+        <th> {{ entry | e }}</th>
+      {% else %}
+        <th>{{ '%0.1f' | format(entry | float) }}</th>
+      {% endif %}
+    {% endfor %}
+    </tr>
+  {% endfor %}
+  </table>
+{% endblock %}
+

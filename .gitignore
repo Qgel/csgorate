@@ -1,0 +1,6 @@
+# compiled python stuff
+*.py[cod]
+
+*.swp
+
+html/*.html

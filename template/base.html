@@ -1,0 +1,64 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  
+  <title> CS:GO Competetive Stats - {% block title %} {% endblock %}</title>
+  <meta name="description" content="Win Chances for CounterStrike: Global Offensive competetive matches based on previous games">
+  <meta name="author" content="qgel">
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="nav.css">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <div id="nav">
+  <ul>
+    <li> <a href="index.html"><span>Home</span></a> </li>
+    {% if curPage == 'win' %}
+      {% set pageName = 'Win Table' %}
+    {% else %}
+      {% set pageName = 'Ranking' %}
+    {% endif %}
+    <li class="has-sub"> <a href="#"><span>Page: {{ pageName }}</span></a>
+      <ul> 
+        <li> <a href="{{ curMap }}_{{ curCount }}_win.html"><span>Win Table</span></a> </li>
+        <li> <a href="{{ curMap }}_{{ curCount }}_rank.html"><span>Ranking</span></a> </li>
+      </ul>
+    </li>
+    <li class="has-sub"> <a href="#"><span>Map: {{ curMap }}</span></a>
+      <ul> 
+      {% for map in maps %}
+        <li> <a href="{{ map }}_{{ curCount }}_{{ curPage }}.html"><span>{{ map }}</span></a> </li>
+      {% endfor %} 
+      </ul>
+    </li>
+    <li class="last has-sub"><a href="#"><span>Matches: {{ curCount }}</span></a>
+      <ul> 
+      {% for cnt in matchCounts %}
+      {% if loop.index0 >= curID or curMap in availMaps[loop.index0] %}
+        <li><a href="{{ curMap }}_{{ cnt }}_{{ curPage }}.html"> <span>{{ cnt }}</span></a> </li>
+      {% endif %}
+      {% endfor %}
+      </ul>
+    </li>
+  </ul>
+  </div>
+
+  <div id="info">
+    {% block info %} 
+    Ranking of CS:GO teams based on the latest {{ numGames }} Games on map '{{ curMap }}' from hltv.org as of {{ genTime.strftime('%Y-%m-%d %H:%M')}} UTC. <br>
+    {% endblock %}
+  </div>
+
+  <div id ="content">
+    {% block content %} {% endblock %}
+  </div>
+
+</body>
+</html>
