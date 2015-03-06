@@ -4,6 +4,7 @@ from Ranking import Ranking
 from SiteGen import SiteGen
 
 matchDays = [30, 60, 180]
+indexDays = 60
 minMatches = 20
 outDir = "./html/"
 
@@ -41,8 +42,9 @@ def gen():
       rkPage = sg.genRankingTablePage(r)
       writePage(wtPage, "{0}_{1}_win".format(mapName, cnt))
       writePage(rkPage, "{0}_{1}_rank".format(mapName, cnt))
-      if matchDays[0] == cnt and mapName == "all":
+      if cnt == indexDays and mapName == "all":
         writePage(wtPage, "index")
+        writePage(wtPage, "rating") # for compatibility with the old url
 
 
 if __name__ == "__main__":
