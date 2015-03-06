@@ -4,7 +4,7 @@ from HltvScrape import Scraper
 from Ranking import Ranking
 from SiteGen import SiteGen
 
-matchCounts = [300, 500, 800]
+matchDays = [30, 60, 120]
 minMatches = 20
 outDir = "./html/"
 
@@ -15,9 +15,9 @@ def writePage(page, name):
 def gen():
   availMaps = []
   scraper = Scraper()
-  scraper.getGames(0, max(matchCounts))
-  for cnt in matchCounts:
-    matches = scraper.getGames(0, cnt)
+  scraper.getGamesForDays(max(matchDays))
+  for (idx,cnt) in enumerate(matchDays):
+    matches = scraper.getGamesForDays(cnt)
 
     # find maps with at least minMatches games played
     suffMaps = filter(lambda k: len(matches[k]) > minMatches, matches)
@@ -29,10 +29,10 @@ def gen():
 
     baseVars = {
         "maps" : suffMaps,
-        "matchCounts" : matchCounts,
+        "matchDays" : matchDays,
         "curCount" : cnt,
         "availMaps" : availMaps,
-        "curID" : matchCounts.index(cnt)
+        "curID" : idx
         }
     sg = SiteGen(globalVars = baseVars)
 
@@ -42,7 +42,7 @@ def gen():
       rkPage = sg.genRankingTablePage(r)
       writePage(wtPage, "{0}_{1}_win".format(mapName, cnt))
       writePage(rkPage, "{0}_{1}_rank".format(mapName, cnt))
-      if matchCounts[0] == cnt and mapName == "all":
+      if matchDays[0] == cnt and mapName == "all":
         writePage(wtPage, "index")
 
 

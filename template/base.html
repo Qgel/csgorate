@@ -38,11 +38,11 @@
       {% endfor %} 
       </ul>
     </li>
-    <li class="last has-sub"><a href="#"><span>Matches: {{ curCount }}</span></a>
+    <li class="last has-sub"><a href="#"><span>Time: {{ curCount }} Days</span></a>
       <ul> 
-      {% for cnt in matchCounts %}
+      {% for cnt in matchDays %}
       {% if loop.index0 >= curID or curMap in availMaps[loop.index0] %}
-        <li><a href="{{ curMap }}_{{ cnt }}_{{ curPage }}.html"> <span>{{ cnt }}</span></a> </li>
+        <li><a href="{{ curMap }}_{{ cnt }}_{{ curPage }}.html"> <span>{{ cnt }} days</span></a> </li>
       {% endif %}
       {% endfor %}
       </ul>
