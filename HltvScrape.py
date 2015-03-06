@@ -36,7 +36,7 @@ class Scraper:
   def mapGames(self,matches):
     mappedGames = {}
     for r in matches:
-      game = (r[0][0][0].encode("utf8").strip(),r[0][1][0].encode("utf8").strip())
+      game = (r[0][0][0].encode("ascii",errors="ignore").strip(),r[0][1][0].encode("ascii", errors="ignore").strip())
       mappedGames.setdefault(r[1], []).append(game)
       mappedGames.setdefault('all',[]).append(game)
     return mappedGames

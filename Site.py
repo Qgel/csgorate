@@ -1,10 +1,9 @@
 #!/usr/bin/python
-
 from HltvScrape import Scraper
 from Ranking import Ranking
 from SiteGen import SiteGen
 
-matchDays = [30, 60, 120]
+matchDays = [30, 60, 180]
 minMatches = 20
 outDir = "./html/"
 
