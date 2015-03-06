@@ -1,3 +1,7 @@
+body {
+    background-color: #FEFDFA;
+}
+
 #info {
   font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   padding: 10px 10px 5px;
@@ -13,7 +17,7 @@
 	margin: 5px;
 	text-align: left;
 	border-collapse: collapse;
-	border: 1px solid #69c;
+	border: 1px solid #2F3440;
   width: 100%;
   table-layout: fixed;
 }
@@ -22,16 +26,16 @@
 	padding: 2px 5px 2px 2px;
 	font-weight: normal;
 	font-size: 10px;
-	color: #669;
+	color: #2F3440;
 }
 #winTable td
 {
 	padding: 2px 4px 2px 2px;
-	color: #669;
+	color: #2F3440;
 }
 #winTable tr:hover
 {
 	color: #339;
-	background: #d0dafd;
+	background: #AABAE5;
 }
 
