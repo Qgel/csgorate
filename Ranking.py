@@ -1,13 +1,13 @@
 #!/usr/bin/python
 
-from trueskill import Rating, rate_1vs1, setup, global_env
+from trueskill import Rating, rate_1vs1, setup, global_env, BETA
 from math import sqrt
 
 # Calculates the win probability of A vs B based on their
 # respective ratings and our certainty of these.
 def Pwin(rA=Rating(), rB=Rating()):
     deltaMu = rA.mu - rB.mu
-    rsss = sqrt(rA.sigma**2 + rB.sigma**2)
+    rsss = sqrt(2*(BETA**2) + rA.sigma**2 + rB.sigma**2)
     return global_env().cdf(deltaMu/rsss)
 
 class Ranking:
