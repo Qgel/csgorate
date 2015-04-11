@@ -101,6 +101,7 @@ class MockBet:
     return False
 
   def evaluate(self, testDays, favor = 20):
+    self.money = 0.0
     rk = Ranking('bet', self.sc.getGamesForDays(testDays)['all'])
 
     betCount = 0
