@@ -60,6 +60,8 @@ class MockBet:
     self.money = 0.0
     self.sc = Scraper()
     self.sc.getGames(0, 1000)
+    csgolounge = CsgoLoungeScraper()
+    self.betGames = csgolounge.getGames(3000, 3101)
     self.unknownTeams = set([])
 
   def bet(self, game, rk, favor):
@@ -100,11 +102,9 @@ class MockBet:
 
   def evaluate(self, testDays, favor = 20):
     rk = Ranking('bet', self.sc.getGamesForDays(testDays)['all'])
-    sc = CsgoLoungeScraper()
-    betGames = sc.getGames(3000, 3101)
 
     betCount = 0
-    for game in betGames:
+    for game in self.betGames:
       betCount += self.bet(game, rk, favor)
 
     return (betCount, self.money)
