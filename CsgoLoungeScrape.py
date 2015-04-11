@@ -34,18 +34,46 @@ class CsgoLoungeScraper:
     if name.lower() in self.nameMap:
       return self.nameMap[name.lower()]
     return name
+
+  def __init__(self):
+    self.cache = []
+    self.cacheIndex = None
                     
 
-  def getGames(self, start, end):
-    result = []
+  def getGames(self, targetDays):
+    if len(self.cache) == 0 or targetDays >= self.cache[-1]['days']:
+      if self.cacheIndex is None:
+        t = html.parse('http://csgolounge.com')
+        self.cacheIndex = int(t.find(".//div[@class='matchleft']/a").attrib['href'][-4:])
+      self._fetchGames(targetDays)
+    return self._getCachedGames(targetDays)
 
-    for i in range(start,end):
+  def _getCachedGames(self, targetDays):
+    pos = next((i for i,v in enumerate(self.cache) if v['days'] > targetDays), len(self.cache))
+    return self.cache[:pos]
+
+  def _fetchGames(self, targetDays):
+    days = 0
+    while(days <= targetDays):
       try:
-        t = html.parse('http://csgolounge.com/match?m={0}'.format(i))
+        t = html.parse('http://csgolounge.com/match?m={0}'.format(self.cacheIndex))
       except:
         continue
+      self.cacheIndex -= 1
+
       outcome = map(lambda x: x.text, t.findall(".//div[@class='box-shiny-alt']//b"))
       odds = map(lambda x: int(x.text[:-1]), t.findall(".//div[@class='box-shiny-alt']//i"))
+      timeData = []
+      try:
+        timeData = t.find(".//div[@class='box-shiny-alt']/div/div").text.split(" ")
+      except:
+        continue
+
+      if len(timeData) >= 2:
+        if "day" in timeData[1]:
+          days = int(timeData[0])
+        elif "month" in timeData[1]:
+          days = int(timeData[0]) * 30
 
       game = {}
       if(len(outcome) < 2):
@@ -60,7 +88,6 @@ class CsgoLoungeScraper:
       if(len(game) > 0):
         game['winner'][0] = self.fixName(game['winner'][0])
         game['loser'][0] = self.fixName(game['loser'][0])
+        game['days'] = days
         print '{0}:{1}'.format(game['winner'], game['loser'])
-        result.append(game)
-    return result
-
+        self.cache.append(game)

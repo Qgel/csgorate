@@ -60,8 +60,7 @@ class MockBet:
     self.money = 0.0
     self.sc = Scraper()
     self.sc.getGames(0, 1000)
-    csgolounge = CsgoLoungeScraper()
-    self.betGames = csgolounge.getGames(3000, 3101)
+    self.csgolounge = CsgoLoungeScraper()
     self.unknownTeams = set([])
 
   def bet(self, game, rk, favor):
@@ -100,12 +99,14 @@ class MockBet:
     print "\tNO BET: odds not favourable"
     return False
 
-  def evaluate(self, testDays, favor = 20):
+  def evaluate(self, betDays, rkDays=60, favor = 20):
     self.money = 0.0
-    rk = Ranking('bet', self.sc.getGamesForDays(testDays)['all'])
+    rk = Ranking('bet', self.sc.getGamesForDays(rkDays, betDays)['all'])
+
+    betGames = self.csgolounge.getGames(betDays)
 
     betCount = 0
-    for game in self.betGames:
+    for game in betGames:
       betCount += self.bet(game, rk, favor)
 
     return (betCount, self.money)
