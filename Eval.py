@@ -84,7 +84,7 @@ class MockBet:
       return False
 
     if(rk.confidence(winner) > self.MINCONF or rk.confidence(loser) > self.MINCONF):
-      print "\tNO BET: confidence to low (< {mc})".format(mc=self.MINCONF)
+      print "\tNO BET: confidence to low (> {mc})".format(mc=self.MINCONF)
       return False
 
     moneyBefore = self.money
