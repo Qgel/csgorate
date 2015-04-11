@@ -3,6 +3,8 @@ from lxml import html
 
 class CsgoLoungeScraper:
 
+  # Mapping of names on csgolounge to names 
+  # used by the ranking (i.e. from Hltv.org)
   nameMap = {
       "cw" : "CPH Wolves",
       "vp" : "Virtus.pro",
@@ -21,7 +23,11 @@ class CsgoLoungeScraper:
       "na'vi" : "Natus Vincere",
       "penta" : "PENTA",
       "fxfire" : "Fenix Fire",
-      "flyingv" : "The Flying V"
+      "flyingv" : "The Flying V",
+      "g4u" : "Games4u",
+      "hr" : "HellRaisers",
+      "dc" : "Damage Control",
+      "x6tence" : "x6tence"
   }
 
   def fixName(self, name):
