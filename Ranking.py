@@ -36,6 +36,12 @@ class Ranking:
   def winChance(self, t1, t2):
     return Pwin(self._getRating(t1), self._getRating(t2))
 
+  def confidence(self, team):
+    return self._getRating(team).sigma
+
+  def isKnown(self, team):
+    return (team in self.db)
+
   # Ranking of the teams based on Rating and confidence
   def ranking(self):
     stats = [(t, self.db[t].mu, self.db[t].sigma, global_env().expose(self.db[t])) for t in self.db]
