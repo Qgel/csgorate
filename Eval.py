@@ -88,19 +88,25 @@ class MockBet:
 
     moneyBefore = self.money
     if (pred - winnerOdds) >= favor:
-        self.money += loserOdds / float(winnerOdds)
-        print "\tSUCCESS: {before} + {win} -> {total}".format(win=loserOdds/float(winnerOdds), total=self.money, before=moneyBefore)
+        amount = (pred - winnerOdds - favor) / 10.0 + 1
+        winAmount = (loserOdds / float(winnerOdds)) * amount
+        self.betTotal += amount
+        self.money +=  winAmount
+        print "\tSUCCESS: {before} + {win} -> {total}".format(win=winAmount, total=self.money, before=moneyBefore)
         return True
     if ((100 - pred) - loserOdds) >= favor:
-        self.money -= 1
-        print "\tFAIL: {before} - 1 -> {total}".format(total=self.money, before=moneyBefore)
+        loss = ((100 - pred) - loserOdds - favor) / 10.0 + 1 
+        self.betTotal += loss
+        self.money -= loss
+        print "\tFAIL: {before} - {l} -> {total}".format(total=self.money, l=loss, before=moneyBefore)
         return True
 
     print "\tNO BET: odds not favourable"
     return False
 
-  def evaluate(self, betDays, rkDays=60, favor = 20):
+  def evaluate(self, betDays, rkDays=60, favor = 10):
     self.money = 0.0
+    self.betTotal = 0.0
     rk = Ranking('bet', self.sc.getGamesForDays(rkDays, betDays)['all'])
 
     betGames = self.csgolounge.getGames(betDays)
@@ -109,4 +115,4 @@ class MockBet:
     for game in betGames:
       betCount += self.bet(game, rk, favor)
 
-    return (betCount, self.money)
+    return (betCount, self.betTotal, self.money, self.money/self.betTotal)
