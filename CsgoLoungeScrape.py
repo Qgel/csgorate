@@ -27,7 +27,9 @@ class CsgoLoungeScraper:
       "g4u" : "Games4u",
       "hr" : "HellRaisers",
       "dc" : "Damage Control",
-      "x6tence" : "x6tence"
+      "x6tence" : "x6tence",
+      "mouz" : "mousesports",
+      "piter" : "PiTER"
   }
 
   def fixName(self, name):
